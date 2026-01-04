@@ -1,0 +1,6 @@
+torch
+gymnasium
+gymnasium[classic-control]
+numpy
+matplotlib
+pyyaml
