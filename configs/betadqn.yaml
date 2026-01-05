@@ -1,0 +1,10 @@
+env: MountainCar-v0
+gamma: 0.99
+lr_q: 0.001
+lr_beta: 0.001
+batch_size: 64
+episodes: 500
+epsilon_start: 1.0
+epsilon_end: 0.05
+epsilon_decay: 0.995
+update_target_every: 500

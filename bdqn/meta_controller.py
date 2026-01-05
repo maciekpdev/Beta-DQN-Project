@@ -26,7 +26,7 @@ class MetaController:
         return best_policy
 
 
-    def update(self, policy_idx, reward, exploration_ratio, ):
+    def update(self, policy_idx, reward, exploration_ratio):
         self.history.append((policy_idx, reward, exploration_ratio))
 
     def count_mean(self, i):

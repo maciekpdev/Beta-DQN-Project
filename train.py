@@ -7,7 +7,7 @@ import yaml
 from dqn.model import DQN
 from dqn.replay_buffer import ReplayBuffer
 from dqn.agent import DQNAgent
-from dqn.utils import set_seed
+from utils import set_seed
 
 parser = argparse.ArgumentParser(description="Train a DQN agent with a YAML config")
 parser.add_argument("config", type=str, help="Path to YAML config file")
