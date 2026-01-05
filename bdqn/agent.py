@@ -22,6 +22,9 @@ class BetaDQNAgent:
         self.update_target_every = config.get("update_target_every", 64)
         self.step_count = 0
 
+        self.criterion_beta = nn.CrossEntropyLoss()
+        self.criterion_q = nn.SmoothL1Loss()
+
     def act(self, state, epsilon, policy):
         with torch.no_grad():
             qvals = self.q_net(torch.tensor(state).to(self.device))
@@ -52,8 +55,7 @@ class BetaDQNAgent:
         with torch.no_grad():
             q_next = self.target_q_net(next_states).max(1)[0]
             target = rewards + self.gamma * q_next * (1 - dones)
-
-        loss = F.mse_loss(q, target)
+        loss = self.criterion_q(q, target)
         self.optimizer_q.zero_grad()
         loss.backward()
         self.optimizer_q.step()
@@ -62,9 +64,7 @@ class BetaDQNAgent:
 
     def train_beta_net(self, states, actions):
         logits = self.beta_net(states)
-
-        loss = nn.CrossEntropyLoss()(logits , actions)
-
+        loss = self.criterion_beta(logits, actions)
         self.optimizer_beta.zero_grad()
         loss.backward()
         self.optimizer_beta.step()

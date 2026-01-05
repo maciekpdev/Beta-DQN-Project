@@ -22,7 +22,7 @@ class DQNAgent:
             q_next = self.target_model(next_states).max(1)[0]
             target = rewards + self.gamma * q_next * (1 - dones)
 
-        loss = F.mse_loss(q, target)
+        loss = F.smooth_l1_loss(q, target)
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
